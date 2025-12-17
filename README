@@ -1,0 +1,74 @@
+A simple lead management system for small businesses and freelancers to track and manage their sales leads.
+
+What It Does
+- LocalLead Mini helps you organize potential customers (leads) and track them through your sales process - from first contact to closing the deal.
+
+Target Users
+- Freelancers managing client prospects
+- Small business owners (real estate agents, insurance agents, consultants)
+- Sales professionals who need simple lead tracking
+- Anyone who gets leads from multiple sources and needs to stay organized
+
+Core Features
+1. User Authentication
+
+Secure signup and login
+Personal lead database (each user sees only their own leads)
+
+2. Lead Management
+
+Add new leads with essential information (name, email, phone, company)
+View all your leads in an organized table
+Edit lead details anytime
+Delete leads you no longer need
+
+3. Status Tracking
+
+Track each lead through 5 stages:
+
+New - Just received this lead
+Contacted - Made first contact
+Qualified - Confirmed they're a good fit
+Won - Successfully closed the deal
+Lost - Deal didn't work out
+
+
+Change status with a simple dropdown
+Visual color-coding for quick status recognition
+
+4. Smart Filtering
+
+Filter leads by status with one click
+See counts for each status category
+Quickly find leads that need attention
+
+5. Dashboard Overview
+
+At-a-glance statistics:
+
+Total leads in your pipeline
+New leads to follow up on
+Deals won this month
+Deals lost this month
+
+
+
+Technical Stack
+
+Frontend: Next.js 14, TypeScript, Tailwind CSS
+Backend: FastAPI (Python)
+Database: PostgreSQL
+Authentication: JWT tokens
+
+What LocalLead Mini Does NOT Include (Coming in Phase 2)
+
+No automated follow-up reminders
+No WhatsApp/SMS integration
+No team features or lead assignment
+No advanced reporting or analytics
+No CSV import/export
+No email notifications
+
+Why LocalLead Mini?
+Simple, focused, and gets the job done. No bloated features you'll never use. Just the essentials to keep your leads organized and moving through your sales pipeline.
+
