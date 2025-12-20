@@ -18,9 +18,10 @@ async def user_signup(new_user:SignupRequest,db:Session = Depends(get_db)):
         if (user_exists):
             raise HTTPException(status_code=409, detail="User already exists. Please log in with your userid and password.")
         pwd_hash = ctx.hash(new_user.password)
-        query = text("INSERT INTO public.users (email, password_hash, fullname) VALUES (:email, :pwd_hash, :fullname)")
+        query = text("INSERT INTO public.users (email, username, password_hash, fullname) VALUES (:email, :username, :pwd_hash, :fullname)")
         user_data = {
             "email": new_user.email,
+            "username": new_user.username,
             "pwd_hash": pwd_hash,
             "fullname": new_user.fullname 
         }
