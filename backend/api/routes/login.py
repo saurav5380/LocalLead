@@ -3,7 +3,6 @@ from passlib.context import CryptContext
 from db import get_db
 from schemas.userlogin_validation import UserLogin
 from sqlalchemy import text
-from jose import jwt
 from services.generate_token import create_access_token
 
 
