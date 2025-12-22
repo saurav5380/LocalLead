@@ -5,7 +5,7 @@ class SignupRequest(BaseModel):
     model_config = ConfigDict(str_strip_whitespace=True)
     email: Annotated[EmailStr, StringConstraints(to_lower=True)] 
     username: str = Field(..., min_length=4)
-    password_hash: str = Field(..., min_length=6, max_length=128)
+    password: str = Field(..., min_length=8, max_length=128)
     fullname: str = Field(..., min_length=2, max_length=50)
 
     @field_validator("password")
