@@ -8,7 +8,7 @@ from sqlalchemy.orm import Session
 from datetime import timedelta
 
 
-app = FastAPI()
+# app = FastAPI()
 router = APIRouter()
 
 @router.post("/login", status_code=status.HTTP_200_OK)
