@@ -27,7 +27,7 @@ async def get_current_user(token: str = Depends(oauth2_scheme),
         if username is None:
             raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, 
                                 detail="Invalid token: missing user information")
-        response = db.execute(text("SELECT username, email, full_name FROM users WHERE username = :username", {"username": username }))
+        response = db.execute(text("SELECT id, username, email, full_name FROM users WHERE username = :username", {"username": username }))
         user = response.fetchone()
         if user is None:
             raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED,
@@ -42,9 +42,10 @@ async def get_current_user(token: str = Depends(oauth2_scheme),
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Unauthorised access")
     
     return {
-        "username": user[0],
-        "email": user[1],
-        "full_name": user[2]
+        "user_id": user[0],
+        "username": user[1],
+        "email": user[2],
+        "full_name": user[3]
     }
 
 
