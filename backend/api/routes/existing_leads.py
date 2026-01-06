@@ -17,7 +17,7 @@ async def current_leads(current_user: dict = Depends(get_current_user), db: Sess
         if not result:
             raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, 
                                 detail= {"error": "Unable to fetch leads."})
-        return [dict(row) for row in result]    
+        return [dict(row) for row in result]     
     except HTTPException:
         raise
     except Exception as e:
