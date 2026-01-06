@@ -12,8 +12,6 @@ class StatusEnum(enum.Enum):
     won = "won"
     lost = "lost"
 
-
-
 class Leads(Base):
     __tablename__ = "leads"
     id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)

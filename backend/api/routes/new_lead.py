@@ -1,5 +1,4 @@
 from fastapi import APIRouter, Depends, status, HTTPException
-from pydantic import BaseModel
 from schemas.newlead_validation import NewLead
 from services.get_current_user import get_current_user
 from sqlalchemy import text
