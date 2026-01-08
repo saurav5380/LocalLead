@@ -10,7 +10,7 @@ router = APIRouter()
 @router.get("/leadsbyid/{id}", status_code=status.HTTP_200_OK, response_model= CurrentLeads)
 async def current_leads(id: int, current_user: dict = Depends(get_current_user), db: Session = Depends(get_db)):
     try:
-        current_userid = current_user["id"]
+        current_userid = current_user["user_id"]
         query = text("SELECT * FROM leads WHERE user_id=:user_id AND id=:lead_id")
         result = db.execute(query,{"user_id": current_userid, "lead_id": id}).fetchone()
         if not result:

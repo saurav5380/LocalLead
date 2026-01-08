@@ -10,7 +10,7 @@ router = APIRouter()
 @router.patch("/patchlead/{id}", status_code=status.HTTP_200_OK)
 async def patch_lead(id: int, lead_data: PatchLead, current_user = Depends(get_current_user), db: Session = Depends(get_db)):
     try:
-        current_user_id = current_user["id"]
+        current_user_id = current_user["user_id"]
         check_query = text("SELECT * FROM leads WHERE id=:lead_id AND user_id=:userid")
         existing_lead = db.execute(check_query, {"lead_id": id, "userid": current_user_id}).fetchone()
         if not existing_lead:

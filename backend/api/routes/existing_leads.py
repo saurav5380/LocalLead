@@ -11,7 +11,7 @@ router = APIRouter()
 @router.get("/getleads", status_code=status.HTTP_200_OK, response_model= List[CurrentLeads])
 async def current_leads(current_user: dict = Depends(get_current_user), db: Session = Depends(get_db)):
     try:
-        current_userid = current_user["id"]
+        current_userid = current_user["user_id"]
         query = text("SELECT * FROM leads WHERE user_id=:user_id")
         result = db.execute(query,{"user_id": current_userid}).fetchall()
         if not result:
