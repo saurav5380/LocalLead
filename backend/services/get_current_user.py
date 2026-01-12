@@ -33,7 +33,6 @@ async def get_current_user(token: str = Depends(oauth2_scheme),
             raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED,
                                 detail="Invalid Username, account does not exist.")
         
-    
     except ExpiredSignatureError:
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED,
                             detail="Token has expired")
