@@ -9,6 +9,7 @@ import EditLeadModal from "@/components/EditLeadModal";
 import DeleteConfirmModal from "@/components/DeleteConfirmModal";
 import StatCard from "@/components/StatCard";
 import FilterButtons from "@/components/FilterButtons";
+import ThemeToggle from "@/components/ThemeToggle";
 
 
 interface Lead {
@@ -25,6 +26,7 @@ interface Lead {
 const Dashboard = () => {
     const [token, setToken] = useState<string>("");
     const [isLoading, setIsLoading] = useState<boolean>(true);
+    const [isMounted, setIsMounted] = useState<boolean>(false);
     const [leads, setLeads] = useState<Lead[]>([])
     const [error, setError] = useState<string | null>(null)
     const [showModal, setShowModal] = useState<boolean>(false);
@@ -36,6 +38,7 @@ const Dashboard = () => {
     const router = useRouter();
 
     useEffect(() => {
+        setIsMounted(true);
         const stored_token  = localStorage.getItem("token");
         if(!stored_token){
             router.push("/login");
@@ -167,36 +170,36 @@ const Dashboard = () => {
         ? leads
         : leads.filter(lead => lead.status === activeFilter);
 
-    const stats = getStatistics(); 
+    const stats = getStatistics();
 
-
-    if (isLoading){
-        return <div className="min-h-screen bg-slate-900 flex items-center justify-center">
-            <div className="text-2xl text-slate-300">Loading...</div>
+    if (!isMounted || isLoading){
+        return <div className="min-h-screen bg-background flex items-center justify-center">
+            <div className="text-2xl text-text-secondary">Loading...</div>
         </div>
     }
 
     if (error){
-        return <div className="min-h-screen bg-slate-900 flex items-center justify-center">
-            <div className="text-xl text-red-400">Error: {error}</div>
+        return <div className="min-h-screen bg-background flex items-center justify-center">
+            <div className="text-xl text-error">Error: {error}</div>
         </div>
     }
 
     return (
-        <div className="min-h-screen bg-slate-900 text-white p-6">
+        <div className="min-h-screen bg-background text-foreground p-6">
             {/* Header */}
-            <div className="flex items-center justify-between mb-8">
-                <h1 className="text-3xl font-bold text-blue-500">Dashboard</h1>
-                <div className="flex gap-4">
+            <div className="flex items-center justify-between mb-8 border-b border-border pb-6">
+                <h1 className="text-3xl font-bold text-primary">Dashboard</h1>
+                <div className="flex gap-3 items-center">
+                    <ThemeToggle />
                     <button
                         onClick={() => setShowModal(true)}
-                        className="bg-violet-500 px-4 py-2 rounded-lg text-lg hover:bg-violet-600 transition"
+                        className="bg-primary px-4 py-2 rounded-lg text-white hover:bg-primary-hover transition"
                     >
                         Add New Lead
                     </button>
                     <button
                         onClick={handleLogout}
-                        className="border-2 text-yellow-100 border-amber-400 px-4 py-2 rounded-lg hover:border-amber-600 hover:text-amber-500 transition"
+                        className="border-2 border-border text-text-secondary px-4 py-2 rounded-lg hover:bg-muted transition"
                     >
                         Logout
                     </button>
@@ -243,22 +246,22 @@ const Dashboard = () => {
             {/* Table Section */}
             {leads.length > 0 ? (
                 <div className="overflow-x-auto">
-                    <table className="w-full border-2 border-slate-700 rounded-lg">
-                        <thead className="bg-slate-800">
+                    <table className="w-full border-2 border-border rounded-lg">
+                        <thead className="bg-surface">
                             <tr>
-                                <th className="px-6 py-4 text-left">Name</th>
-                                <th className="px-6 py-4 text-left">Email</th>
-                                <th className="px-6 py-4 text-left">Phone</th>
-                                <th className="px-6 py-4 text-left">Company</th>
-                                <th className="px-6 py-4 text-left">Status</th>
-                                <th className="px-6 py-4 text-left">Actions</th>
+                                <th className="px-6 py-4 text-left text-foreground">Name</th>
+                                <th className="px-6 py-4 text-left text-foreground">Email</th>
+                                <th className="px-6 py-4 text-left text-foreground">Phone</th>
+                                <th className="px-6 py-4 text-left text-foreground">Company</th>
+                                <th className="px-6 py-4 text-left text-foreground">Status</th>
+                                <th className="px-6 py-4 text-left text-foreground">Actions</th>
                             </tr>
                         </thead>
                         <tbody>
                             {filteredLeads.map(lead => (
                                 <tr
                                     key={lead.id}
-                                    className="border-t border-slate-700 hover:bg-slate-800 transition"
+                                    className="border-t border-border hover:bg-muted transition"
                                 >
                                     <td className="px-6 py-4">{lead.name}</td>
                                     <td className="px-6 py-4">{lead.email || "N/A"}</td>
@@ -268,7 +271,7 @@ const Dashboard = () => {
                                         <select
                                             value={lead.status}
                                             onChange={(e) => handleStatusChange(lead.id, e.target.value)}
-                                            className="bg-slate-700 border-2 border-slate-600 rounded px-2 py-1 focus:border-blue-500 outline-none"
+                                            className="bg-muted border-2 border-border text-foreground rounded px-2 py-1 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition"
                                         >
                                             <option value="new">New</option>
                                             <option value="contacted">Contacted</option>
@@ -284,7 +287,7 @@ const Dashboard = () => {
                                                     setSelectedLead(lead);
                                                     setShowEditModal(true);
                                                 }}
-                                                className="p-2 bg-blue-500 rounded hover:bg-blue-600 transition"
+                                                className="p-2 bg-primary rounded hover:bg-primary-hover transition"
                                                 title="Edit"
                                             >
                                                 <Edit size={16} />
@@ -294,7 +297,7 @@ const Dashboard = () => {
                                                     setSelectedLead(lead);
                                                     setShowDeleteModal(true);
                                                 }}
-                                                className="p-2 bg-red-500 rounded hover:bg-red-600 transition"
+                                                className="p-2 bg-error rounded hover:bg-error/90 transition"
                                                 title="Delete"
                                             >
                                                 <Trash2 size={16} />
@@ -307,7 +310,7 @@ const Dashboard = () => {
                     </table>
                 </div>
             ) : (
-                <div className="text-center text-xl text-slate-400 py-12">
+                <div className="text-center text-xl text-text-tertiary py-12">
                     No leads found. Click "Add New Lead" to get started.
                 </div>
             )}

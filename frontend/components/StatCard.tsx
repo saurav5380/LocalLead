@@ -10,15 +10,15 @@ interface StatCardProps {
 
 export default function StatCard({ title, value, icon, colorClass = "bg-blue-500", subtitle }: StatCardProps) {
     return (
-        <div className="border-2 rounded-lg p-6 flex flex-col gap-2 bg-slate-800 hover:shadow-lg transition-all">
+        <div className="border-2 border-border rounded-lg p-6 flex flex-col gap-2 bg-surface hover:shadow-lg transition-all">
             {icon && (
                 <div className={`w-12 h-12 rounded-full flex items-center justify-center ${colorClass}`}>
                     {icon}
                 </div>
             )}
-            <p className="text-4xl font-bold">{value}</p>
-            <p className="text-lg text-slate-300">{title}</p>
-            {subtitle && <p className="text-sm text-slate-400">{subtitle}</p>}
+            <p className="text-4xl font-bold text-foreground">{value}</p>
+            <p className="text-lg text-text-secondary">{title}</p>
+            {subtitle && <p className="text-sm text-text-tertiary">{subtitle}</p>}
         </div>
     );
 }

@@ -36,8 +36,8 @@ export default function FilterButtons({ leads, activeFilter, onFilterChange }: F
                         onClick={() => onFilterChange(filter)}
                         className={`px-4 py-2 rounded-lg font-medium transition ${
                             isActive
-                                ? "bg-blue-500 text-white"
-                                : "border-2 border-slate-600 text-slate-300 hover:border-blue-400"
+                                ? "bg-primary text-white"
+                                : "border-2 border-border text-text-secondary hover:border-primary"
                         }`}
                     >
                         {filter.charAt(0).toUpperCase() + filter.slice(1)} ({count})

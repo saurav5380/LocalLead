@@ -1,26 +1,178 @@
 @import "tailwindcss";
 
+/* Light Mode (Default) */
 :root {
+  /* Base Colors */
   --background: #ffffff;
-  --foreground: #171717;
+  --foreground: #0f172a;
+
+  /* Surface Colors */
+  --surface: #f8fafc;
+  --surface-elevated: #ffffff;
+
+  /* Border Colors */
+  --border: #e2e8f0;
+  --border-hover: #cbd5e1;
+
+  /* Primary Brand Colors */
+  --primary: #3b82f6;
+  --primary-hover: #2563eb;
+  --primary-foreground: #ffffff;
+
+  /* Secondary Colors */
+  --secondary: #8b5cf6;
+  --secondary-hover: #7c3aed;
+
+  /* Accent Colors */
+  --accent: #06b6d4;
+  --accent-hover: #0891b2;
+
+  /* Semantic Colors */
+  --success: #10b981;
+  --warning: #f59e0b;
+  --error: #ef4444;
+  --info: #3b82f6;
+
+  /* Text Colors */
+  --text-primary: #0f172a;
+  --text-secondary: #475569;
+  --text-tertiary: #94a3b8;
+
+  /* Muted Colors */
+  --muted: #f1f5f9;
+  --muted-foreground: #64748b;
 }
 
+/* Dark Mode */
+.dark {
+  /* Base Colors */
+  --background: #0f172a;
+  --foreground: #f8fafc;
+
+  /* Surface Colors */
+  --surface: #1e293b;
+  --surface-elevated: #334155;
+
+  /* Border Colors */
+  --border: #334155;
+  --border-hover: #475569;
+
+  /* Primary Brand Colors */
+  --primary: #3b82f6;
+  --primary-hover: #60a5fa;
+  --primary-foreground: #ffffff;
+
+  /* Secondary Colors */
+  --secondary: #8b5cf6;
+  --secondary-hover: #a78bfa;
+
+  /* Accent Colors */
+  --accent: #06b6d4;
+  --accent-hover: #22d3ee;
+
+  /* Semantic Colors */
+  --success: #10b981;
+  --warning: #f59e0b;
+  --error: #ef4444;
+  --info: #3b82f6;
+
+  /* Text Colors */
+  --text-primary: #f8fafc;
+  --text-secondary: #cbd5e1;
+  --text-tertiary: #94a3b8;
+
+  /* Muted Colors */
+  --muted: #1e293b;
+  --muted-foreground: #94a3b8;
+}
+
+/* System Preference Detection */
+@media (prefers-color-scheme: dark) {
+  :root:not(.light) {
+    /* Base Colors */
+    --background: #0f172a;
+    --foreground: #f8fafc;
+
+    /* Surface Colors */
+    --surface: #1e293b;
+    --surface-elevated: #334155;
+
+    /* Border Colors */
+    --border: #334155;
+    --border-hover: #475569;
+
+    /* Primary Brand Colors */
+    --primary: #3b82f6;
+    --primary-hover: #60a5fa;
+    --primary-foreground: #ffffff;
+
+    /* Secondary Colors */
+    --secondary: #8b5cf6;
+    --secondary-hover: #a78bfa;
+
+    /* Accent Colors */
+    --accent: #06b6d4;
+    --accent-hover: #22d3ee;
+
+    /* Semantic Colors */
+    --success: #10b981;
+    --warning: #f59e0b;
+    --error: #ef4444;
+    --info: #3b82f6;
+
+    /* Text Colors */
+    --text-primary: #f8fafc;
+    --text-secondary: #cbd5e1;
+    --text-tertiary: #94a3b8;
+
+    /* Muted Colors */
+    --muted: #1e293b;
+    --muted-foreground: #94a3b8;
+  }
+}
+
+/* Tailwind Theme Mappings */
 @theme inline {
+  /* Colors */
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-surface: var(--surface);
+  --color-surface-elevated: var(--surface-elevated);
+  --color-border: var(--border);
+  --color-border-hover: var(--border-hover);
+  --color-primary: var(--primary);
+  --color-primary-hover: var(--primary-hover);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-hover: var(--secondary-hover);
+  --color-accent: var(--accent);
+  --color-accent-hover: var(--accent-hover);
+  --color-success: var(--success);
+  --color-warning: var(--warning);
+  --color-error: var(--error);
+  --color-info: var(--info);
+  --color-text-primary: var(--text-primary);
+  --color-text-secondary: var(--text-secondary);
+  --color-text-tertiary: var(--text-tertiary);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+
+  /* Fonts */
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
+/* Global Styles */
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans), Arial, Helvetica, sans-serif;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Smooth theme transitions */
+* {
+  transition-property: background-color, border-color, color, fill, stroke;
+  transition-duration: 0.2s;
+  transition-timing-function: ease-in-out;
 }

@@ -2,9 +2,9 @@ from fastapi import FastAPI, APIRouter, Depends, status, HTTPException
 from sqlalchemy.orm import Session
 from sqlalchemy import text
 from services.get_current_user import get_current_user
-from backend.db import get_db
+from db import get_db
 from typing import List
-from schemas.current_leads import CurrentLeads
+from ..schemas.current_leads import CurrentLeads
 
 router = APIRouter()
 
@@ -15,9 +15,8 @@ async def current_leads(current_user: dict = Depends(get_current_user), db: Sess
         query = text("SELECT * FROM leads WHERE user_id=:user_id")
         result = db.execute(query,{"user_id": current_userid}).fetchall()
         if not result:
-            raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, 
-                                detail= {"error": "Unable to fetch leads."})
-        return [dict(row) for row in result]     
+            return []
+        return [dict(row._mapping) for row in result]     
     except HTTPException:
         raise
     except Exception as e:

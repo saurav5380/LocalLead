@@ -87,17 +87,17 @@ export default function EditLeadModal({ lead, onClose, onSuccess, userToken }: E
     return (
         <>
         <div ref={modalRef} onClick={closeModal} className="fixed inset-0 bg-black bg-opacity-30 backdrop-blur-sm flex items-center justify-center">
-            <div className="bg-slate-800 rounded-lg p-6 max-w-md w-full mx-4">
+            <div className="bg-surface border border-border rounded-lg p-6 max-w-md w-full mx-4">
                 <div className="flex items-center justify-between mb-4">
-                    <h3 className="text-2xl font-bold text-white">Edit Lead</h3>
-                    <button onClick={onClose} className="text-slate-400 hover:text-white transition">
+                    <h3 className="text-2xl font-bold text-foreground">Edit Lead</h3>
+                    <button onClick={onClose} className="text-text-tertiary hover:text-foreground transition">
                         <X size={30}/>
                     </button>
                 </div>
 
                 {modalError && (
-                    <div className="bg-red-500 bg-opacity-20 border-2 border-red-500 rounded-lg p-4 mb-4">
-                        <p className="text-red-300">{modalError}</p>
+                    <div className="bg-error/10 border-2 border-error rounded-lg p-4 mb-4">
+                        <p className="text-error">{modalError}</p>
                     </div>
                 )}
 
@@ -107,7 +107,7 @@ export default function EditLeadModal({ lead, onClose, onSuccess, userToken }: E
                         placeholder="Enter Lead Name (min 10 characters)"
                         value={name}
                         onChange={(e) => setName(e.target.value)}
-                        className="w-full border-2 rounded-lg border-slate-600 bg-slate-700 text-white px-3 py-2 focus:border-blue-500 outline-none"
+                        className="w-full border-2 rounded-lg border-border bg-background text-foreground px-3 py-2 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition"
                         required
                     />
                     <input
@@ -115,29 +115,29 @@ export default function EditLeadModal({ lead, onClose, onSuccess, userToken }: E
                         placeholder="Enter Email (optional)"
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
-                        className="w-full border-2 rounded-lg border-slate-600 bg-slate-700 text-white px-3 py-2 focus:border-blue-500 outline-none"
+                        className="w-full border-2 rounded-lg border-border bg-background text-foreground px-3 py-2 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition"
                     />
                     <input
                         type="text"
                         placeholder="Enter Company Name (optional)"
                         value={companyName}
                         onChange={(e) => setCompanyName(e.target.value)}
-                        className="w-full border-2 rounded-lg border-slate-600 bg-slate-700 text-white px-3 py-2 focus:border-blue-500 outline-none"
+                        className="w-full border-2 rounded-lg border-border bg-background text-foreground px-3 py-2 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition"
                     />
                     <input
                         type="tel"
                         placeholder="Enter Phone Number (optional)"
                         value={phone}
                         onChange={(e) => setPhone(e.target.value)}
-                        className="w-full border-2 rounded-lg border-slate-600 bg-slate-700 text-white px-3 py-2 focus:border-blue-500 outline-none"
+                        className="w-full border-2 rounded-lg border-border bg-background text-foreground px-3 py-2 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition"
                     />
                     <div className="flex flex-col gap-2">
-                        <label htmlFor="status" className="text-slate-300">Lead Status:</label>
+                        <label htmlFor="status" className="text-text-secondary">Lead Status:</label>
                         <select
                             id="status"
                             value={status}
                             onChange={(e) => setStatus(e.target.value as T_status)}
-                            className="w-full border-2 rounded-lg border-slate-600 bg-slate-700 text-white px-3 py-2 focus:border-blue-500 outline-none"
+                            className="w-full border-2 rounded-lg border-border bg-background text-foreground px-3 py-2 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition"
                         >
                             {statusOptions.map((status) => (
                                 <option key={status} value={status}>{enumStatus[status]}</option>
@@ -147,7 +147,7 @@ export default function EditLeadModal({ lead, onClose, onSuccess, userToken }: E
                     <button
                         type="submit"
                         disabled={isSubmitting}
-                        className="w-full bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition disabled:opacity-50 disabled:cursor-not-allowed"
+                        className="w-full bg-primary text-white px-4 py-2 rounded-lg hover:bg-primary-hover transition disabled:opacity-50 disabled:cursor-not-allowed"
                     >
                         {isSubmitting ? "Updating..." : "Update Lead"}
                     </button>

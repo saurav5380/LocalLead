@@ -2,8 +2,8 @@ from fastapi import FastAPI, APIRouter, Depends, status, HTTPException
 from sqlalchemy.orm import Session
 from sqlalchemy import text
 from services.get_current_user import get_current_user
-from backend.db import get_db
-from schemas.patch_existing_lead import PatchLead
+from db import get_db
+from ..schemas.patch_existing_lead import PatchLead
 
 router = APIRouter()
 
@@ -42,15 +42,15 @@ async def patch_lead(id: int, lead_data: PatchLead, current_user = Depends(get_c
         update_fields.append("updated_at = NOW()")
 
         if update_fields:
-            update_query = db.execute(text(f"""
+            update_query = text(f"""
                                            UPDATE leads
                                            SET {','.join(update_fields)}
                                            WHERE id = :lead_id AND user_id = :user_id
-                                           RETURNING * """))
+                                           RETURNING * """)
             result = db.execute(update_query, update_values).fetchone()
             db.commit()
-            return dict(result)
-        return dict(existing_lead)
+            return dict(result._mapping)
+        return dict(existing_lead._mapping)
     
     except Exception as e:
         db.rollback()

@@ -7,6 +7,12 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from api.routes.signup import router as signup_router
 from api.routes.login import router as login_router
+from api.routes.existing_leads import router as existing_leads_router
+from api.routes.new_lead import router as new_lead_router
+from api.routes.delete_lead import router as delete_lead_router
+from api.routes.patch_lead import router as patch_lead_router
+from api.routes.current_user import router as current_user_router
+from api.routes.lead_by_id import router as lead_by_id_router
 
 load_dotenv()
 
@@ -31,6 +37,12 @@ app.add_middleware(
 
 app.include_router(signup_router)
 app.include_router(login_router)
+app.include_router(existing_leads_router)
+app.include_router(new_lead_router)
+app.include_router(delete_lead_router)
+app.include_router(patch_lead_router)
+app.include_router(current_user_router)
+app.include_router(lead_by_id_router)
 
 
 @app.get("/",)

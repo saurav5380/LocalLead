@@ -27,9 +27,9 @@ async def login_user(current_user:UserLogin, db: Session = Depends(get_db)):
             pwd_is_valid = pwd_context.verify(current_user.password, stored_pwd_hash)
             if not pwd_is_valid: 
                 raise HTTPException(status_code=401, detail="Invalid username or password")
-            if (pwd_is_valid): 
+            if (pwd_is_valid):
                 user_data = {
-                    "username": current_user.username
+                    "sub": current_user.username
                 }
                 token = create_access_token(user_data, expires_delta=timedelta(minutes=30))
                 return {"access_token": token, "token_type": "bearer"}
