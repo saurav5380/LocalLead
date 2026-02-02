@@ -11,23 +11,36 @@ enum enumStatus {
     won = "won",
     lost = "lost"
 }
-interface AddLeadModalProps {
-    onClose: () => void;
-    onSuccess: () => void;
-    userToken: string
+
+interface Lead {
+    id: number;
+    name: string;
+    email: string;
+    phone: string;
+    company_name: string;
+    status: string;
+    created_at: string;
+    updated_at: string;
 }
 
-export default function AddLeadModal({onClose, onSuccess, userToken}: AddLeadModalProps){
+interface EditLeadModalProps {
+    lead: Lead;
+    onClose: () => void;
+    onSuccess: () => void;
+    userToken: string;
+}
+
+export default function EditLeadModal({ lead, onClose, onSuccess, userToken }: EditLeadModalProps) {
     const modalRef = useRef<HTMLDivElement>(null);
 
     const [modalError, setModalError] = useState<string | null>(null);
     const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
-    const [name, setName] = useState<string>("");
-    const [email, setEmail] = useState<string>("");
-    const [companyName, setCompanyName] = useState<string>("");
-    const [phone, setPhone] = useState<string>("");
+    const [name, setName] = useState<string>(lead.name);
+    const [email, setEmail] = useState<string>(lead.email || "");
+    const [companyName, setCompanyName] = useState<string>(lead.company_name || "");
+    const [phone, setPhone] = useState<string>(lead.phone || "");
     type T_status = keyof typeof enumStatus;
-    const [status, setStatus] = useState<T_status> (enumStatus.new);
+    const [status, setStatus] = useState<T_status>(lead.status as T_status);
     const statusOptions: T_status[] = Object.keys(enumStatus) as T_status[];
 
     const handleSubmit = async (e: React.FormEvent) => {
@@ -48,8 +61,8 @@ export default function AddLeadModal({onClose, onSuccess, userToken}: AddLeadMod
                 status
             };
 
-            await axios.post(
-                "http://localhost:8000/newlead",
+            await axios.patch(
+                `http://localhost:8000/patchlead/${lead.id}`,
                 requestBody,
                 tokenConfig
             );
@@ -58,25 +71,25 @@ export default function AddLeadModal({onClose, onSuccess, userToken}: AddLeadMod
             onClose();
         } catch (err: any) {
             setModalError(
-                err.response?.data?.detail || "Failed to create lead. Please try again."
+                err.response?.data?.detail || "Failed to update lead. Please try again."
             );
         } finally {
             setIsSubmitting(false);
         }
-    }
+    };
 
     const closeModal = (e: React.MouseEvent) => {
-        if (modalRef.current === e.target){
+        if (modalRef.current === e.target) {
             onClose();
         }
-    }
+    };
 
     return (
         <>
         <div ref={modalRef} onClick={closeModal} className="fixed inset-0 bg-black bg-opacity-30 backdrop-blur-sm flex items-center justify-center">
             <div className="bg-slate-800 rounded-lg p-6 max-w-md w-full mx-4">
                 <div className="flex items-center justify-between mb-4">
-                    <h3 className="text-2xl font-bold text-white">New Lead Form</h3>
+                    <h3 className="text-2xl font-bold text-white">Edit Lead</h3>
                     <button onClick={onClose} className="text-slate-400 hover:text-white transition">
                         <X size={30}/>
                     </button>
@@ -134,16 +147,13 @@ export default function AddLeadModal({onClose, onSuccess, userToken}: AddLeadMod
                     <button
                         type="submit"
                         disabled={isSubmitting}
-                        className="w-full bg-violet-500 text-white px-4 py-2 rounded-lg hover:bg-violet-600 transition disabled:opacity-50 disabled:cursor-not-allowed"
+                        className="w-full bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition disabled:opacity-50 disabled:cursor-not-allowed"
                     >
-                        {isSubmitting ? "Creating..." : "Create Lead"}
+                        {isSubmitting ? "Updating..." : "Update Lead"}
                     </button>
                 </form>
             </div>
         </div>
         </>
-    )
+    );
 }
-
-
-
